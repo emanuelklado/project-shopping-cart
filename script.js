@@ -40,8 +40,10 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 
 window.onload = async () => {
+  // passando o obj retornado da função fetchProducts
   const products = await fetchProducts('computador');
   const listProducts = document.querySelector('.items');
+  // passando cada elemento do obj como paramentro da função que cria os produtos.
   products.forEach((element) => {
     listProducts.appendChild(createProductItemElement(element));
   });
