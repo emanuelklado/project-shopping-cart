@@ -31,22 +31,31 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 //   return item.querySelector('span.item__sku').innerText;
 // }
 
+// exclui as linhas e salva
 function cartItemClickListener(event) {
   event.target.remove();
+  saveCartItems(listCart.innerHTML);
 }
+// limpa o carrinho inteiro e salva
+clearCart.addEventListener('click', () => {
+  listCart.innerHTML = '';
+  localStorage.removeItem('cartItems');
+  });
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
+
   return li;
 }
-
+// cria as linhas, renderiza os itens e salva.
 async function getIdElement(event) {
 const id = event.target.parentNode.firstChild.innerText;
 const item = await fetchItem(id);
 listCart.appendChild(createCartItemElement(item));
+saveCartItems(listCart.innerHTML);
 }
 
 function catchID() {
@@ -54,11 +63,6 @@ function catchID() {
    addToCart[index].addEventListener('click', getIdElement); 
   }
 }
-
-// limpa o carrinho inteiro
-clearCart.addEventListener('click', () => {
-listCart.innerHTML = '';
-});
 
 window.onload = async () => {
   // passando o obj retornado da função fetchProducts
@@ -69,4 +73,6 @@ window.onload = async () => {
     listProducts.appendChild(createProductItemElement(element));
   });
   catchID();
+  getSavedCartItems();
+  listCart.innerHTML = getSavedCartItems();
 };
