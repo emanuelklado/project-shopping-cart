@@ -1,5 +1,6 @@
 const listCart = document.querySelector('.cart__items');
-const addToCar = document.getElementsByClassName('item__add');
+const addToCart = document.getElementsByClassName('item__add');
+const clearCart = document.querySelector('.empty-cart');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -26,14 +27,14 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
+// function getSkuFromProductItem(item) {
+//   return item.querySelector('span.item__sku').innerText;
+// }
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
+// function cartItemClickListener(event) {
+//   // coloque seu código aqui
   
-}
+// }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
@@ -44,16 +45,19 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 }
 
 async function getIdElement(event) {
-const id = event.target.parentElement.firstElementChild.innerText;
+const id = event.target.parentNode.firstChild.innerText;
 const item = await fetchItem(id);
 listCart.appendChild(createCartItemElement(item));
 }
 
 function catchID() {
-  for (let index = 0; index < addToCar.length; index += 1) {
-   addToCar[index].addEventListener('click', getIdElement); 
+  for (let index = 0; index < addToCart.length; index += 1) {
+   addToCart[index].addEventListener('click', getIdElement); 
   }
 }
+clearCart.addEventListener('click', () => {
+listCart.innerHTML = '';
+});
 
 window.onload = async () => {
   // passando o obj retornado da função fetchProducts
