@@ -4,6 +4,16 @@ const clearCart = document.querySelector('.empty-cart');
 const itemLi = document.getElementsByClassName('cart__item');
 const listProducts = document.querySelector('.items');
 const loadMsg = document.createElement('p');
+const pTotal = document.querySelector('.total-price');
+
+function sum() {
+const sumTotal = [];
+for (let index = 0; index < itemLi.length; index += 1) {
+  const itemCart = (Number(itemLi[index].innerText.split('$')[1]));
+  sumTotal.push(itemCart);
+}
+ pTotal.innerText = sumTotal.reduce((acum, el) => acum + el, 0).toFixed(2);
+}
 
 function loading() {
   loadMsg.innerText = 'carregando...';
@@ -44,11 +54,13 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 function cartItemClickListener(event) {
   event.target.remove();
   saveCartItems(listCart.innerHTML);
+  sum();
 }
 // limpa o carrinho inteiro e salva
 clearCart.addEventListener('click', () => {
   listCart.innerHTML = '';
   localStorage.removeItem('cartItems');
+  sum();
   });
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -66,12 +78,14 @@ const id = event.target.parentNode.firstChild.innerText;
 const item = await fetchItem(id);
 listCart.appendChild(createCartItemElement(item));
 saveCartItems(listCart.innerHTML);
+sum();
 }
 // permite remover itens apos atualizar pagina
 function removeLinesAfterLoading() {
 for (let index = 0; index < itemLi.length; index += 1) {
   itemLi[index].addEventListener('click', cartItemClickListener);
 }
+sum();
 }
 // percorre os elementos e adiciona evento click em todos eles.(botões);
 function catchID() {
@@ -93,4 +107,5 @@ window.onload = async () => {
   getSavedCartItems();
   listCart.innerHTML = getSavedCartItems();
   removeLinesAfterLoading();
+  sum();
 };
