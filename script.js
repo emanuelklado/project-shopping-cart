@@ -1,6 +1,7 @@
 const listCart = document.querySelector('.cart__items');
 const addToCart = document.getElementsByClassName('item__add');
 const clearCart = document.querySelector('.empty-cart');
+const itemLi = document.getElementsByClassName('cart__item');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -50,6 +51,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 
   return li;
 }
+
 // cria as linhas, renderiza os itens e salva.
 async function getIdElement(event) {
 const id = event.target.parentNode.firstChild.innerText;
@@ -57,7 +59,13 @@ const item = await fetchItem(id);
 listCart.appendChild(createCartItemElement(item));
 saveCartItems(listCart.innerHTML);
 }
-
+// permite remover itens apos atualizar pagina
+function removeLinesAfterLoading() {
+for (let index = 0; index < itemLi.length; index += 1) {
+  itemLi[index].addEventListener('click', cartItemClickListener);
+}
+}
+// percorre os elementos e adiciona evento click em todos eles.(botões);
 function catchID() {
   for (let index = 0; index < addToCart.length; index += 1) {
    addToCart[index].addEventListener('click', getIdElement); 
@@ -75,4 +83,5 @@ window.onload = async () => {
   catchID();
   getSavedCartItems();
   listCart.innerHTML = getSavedCartItems();
+  removeLinesAfterLoading();
 };
