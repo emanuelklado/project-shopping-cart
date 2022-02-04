@@ -9,10 +9,10 @@ const pTotal = document.querySelector('.total-price');
 function sum() {
 const sumTotal = [];
 for (let index = 0; index < itemLi.length; index += 1) {
-  const itemCart = (Number(itemLi[index].innerText.split('$')[1]));
-  sumTotal.push(itemCart);
+  const itemCartPrice = (Number(itemLi[index].innerText.split('$')[1]));
+  sumTotal.push(itemCartPrice);
 }
- pTotal.innerText = sumTotal.reduce((acum, el) => acum + el, 0).toFixed(2);
+ pTotal.innerText = sumTotal.reduce((acum, el) => acum + el, 0).toFixed(0);
 }
 
 function loading() {
@@ -85,7 +85,6 @@ function removeLinesAfterLoading() {
 for (let index = 0; index < itemLi.length; index += 1) {
   itemLi[index].addEventListener('click', cartItemClickListener);
 }
-sum();
 }
 // percorre os elementos e adiciona evento click em todos eles.(botões);
 function catchID() {

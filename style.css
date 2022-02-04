@@ -102,6 +102,12 @@ body {
   box-sizing: border-box;
 }
 
+.item:hover {
+  border: 2px solid grey;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
 .item .item__sku {
   display: none;
 }
@@ -119,7 +125,7 @@ body {
 }
 
 .item .item__add {
-  background-color: rgb(5, 52, 219);
+  background-color: #09342d;
   border: 0;
   cursor: pointer;
   margin: 0;
