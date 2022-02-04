@@ -2,6 +2,14 @@ const listCart = document.querySelector('.cart__items');
 const addToCart = document.getElementsByClassName('item__add');
 const clearCart = document.querySelector('.empty-cart');
 const itemLi = document.getElementsByClassName('cart__item');
+const listProducts = document.querySelector('.items');
+const loadMsg = document.createElement('p');
+
+function loading() {
+  loadMsg.innerText = 'carregando...';
+  loadMsg.className = 'loading';
+  listProducts.appendChild(loadMsg);
+}
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -73,13 +81,14 @@ function catchID() {
 }
 
 window.onload = async () => {
+  loading();
   // passando o obj retornado da função fetchProducts
   const products = await fetchProducts('computador');
-  const listProducts = document.querySelector('.items');
   // passando cada elemento do obj como paramentro da função que cria os produtos.
   products.forEach((element) => {
     listProducts.appendChild(createProductItemElement(element));
   });
+  loadMsg.remove();
   catchID();
   getSavedCartItems();
   listCart.innerHTML = getSavedCartItems();
