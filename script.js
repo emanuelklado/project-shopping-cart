@@ -12,7 +12,7 @@ for (let index = 0; index < itemLi.length; index += 1) {
   const itemCartPrice = (Number(itemLi[index].innerText.split('$')[1]));
   sumTotal.push(itemCartPrice);
 }
- pTotal.innerText = sumTotal.reduce((acum, el) => acum + el, 0).toFixed(0);
+ pTotal.innerText = sumTotal.reduce((acum, el) => acum + el, 0);
 }
 
 function loading() {
